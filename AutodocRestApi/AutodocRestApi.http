@@ -1,0 +1,6 @@
+@AutodocRestApi_HostAddress = http://localhost:5140
+
+GET {{AutodocRestApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
