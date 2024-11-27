@@ -31,41 +31,12 @@ namespace TaskManagementAPI.Controllers
         [HttpPost("upload/{fileTaskId}")]
         public async Task<IActionResult> UploadFile(int fileTaskId, IFormFile file)
         {
-            //if (file == null || file.Length == 0)
-            //    return BadRequest("Файл отсутствует или пуст.");
-
-            //// Генерация пути для сохранения файла
-            //var uploadsFolder = Path.Combine("Uploads", fileTaskId.ToString());
-            //Directory.CreateDirectory(uploadsFolder);
-
-            //var filePath = Path.Combine(uploadsFolder, file.FileName);
-
-            //// Потоковая запись файла
-            //using (var fileStream = new FileStream(filePath, FileMode.Create))
-            //{
-            //    await file.CopyToAsync(fileStream);
-            //}
-
-            //// Сохранение информации о файле в базу данных
-            //var fileAttachment = new FileAttachment
-            //{
-            //    FileName = file.FileName,
-            //    FileSize = file.Length,
-            //    FilePath = filePath,
-            //    FileTaskId = fileTaskId
-            //};
-
-            //await _fileRepository.AddAsync(fileAttachment);
-            //await _fileRepository.SaveChangesAsync();
-
-            //return Ok(new { Message = "Файл успешно загружен", FileId = fileAttachment.Id });
-
             if (file == null || file.Length == 0)
-                return BadRequest("No file uploaded.");
+                return BadRequest("Не загружен файл");
 
             var task = await _taskRepository.GetByIdAsync(fileTaskId);
             if (task == null)
-                return NotFound("Task not found.");
+                return NotFound("Task не найдена");
 
             var fileId = await _fileStorageRepository.UploadFileAsync(file);
 
@@ -83,35 +54,12 @@ namespace TaskManagementAPI.Controllers
             return Ok(new { Message = "Файл успешно загружен", fileAttachment.Id, fileAttachment.FileName });
         }
 
-        //[HttpGet("files/{fileId}")]
-        //public async Task<IActionResult> DownloadFile(int fileId)
-        //{
-        //    //var file = await _taskService.GetFileByIdAsync(fileId);
-        //    //if (file == null)
-        //    //    return NotFound("File not found.");
-
-        //    //var memory = new MemoryStream();
-        //    //using (var stream = new FileStream(file.FilePath, FileMode.Open, FileAccess.Read))
-        //    //{
-        //    //    await stream.CopyToAsync(memory);
-        //    //}
-
-        //    //memory.Position = 0;
-        //    //return File(memory, "application/octet-stream", file.FileName);
-
-        //    var stream = await _fileStorageRepository.DownloadFileAsync(fileId);
-        //    if (stream == null)
-        //        return NotFound("File not found.");
-
-        //    return File(stream, "application/octet-stream");
-        //}
-
         [HttpGet("files/{fileId}")]
         public async Task<IActionResult> DownloadFile(string fileId) // fileId — строка
         {
             var stream = await _fileStorageRepository.DownloadFileAsync(fileId);
             if (stream == null)
-                return NotFound("File not found.");
+                return NotFound("Файл не найден");
 
             return File(stream, "application/octet-stream");
         }
@@ -121,7 +69,7 @@ namespace TaskManagementAPI.Controllers
         {
             var file = await _fileRepository.FindAsync(f => f.FilePath == fileId);
             if (!file.Any())
-                return NotFound("File not found.");
+                return NotFound("Файл не найден");
 
             await _fileStorageRepository.DeleteFileAsync(fileId);
 

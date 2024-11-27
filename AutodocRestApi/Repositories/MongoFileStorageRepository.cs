@@ -18,7 +18,6 @@ namespace TaskManagementAPI.Repositories
             });
         }
 
-        /// <inheritdoc />
         public async Task<string> UploadFileAsync(IFormFile file)
         {
             using (var stream = file.OpenReadStream())
@@ -28,7 +27,6 @@ namespace TaskManagementAPI.Repositories
             }
         }
 
-        /// <inheritdoc />
         public async Task<Stream?> DownloadFileAsync(string id)
         {
             if (!ObjectId.TryParse(id, out var objectId))
@@ -44,7 +42,6 @@ namespace TaskManagementAPI.Repositories
             }
         }
 
-        /// <inheritdoc />
         public async Task DeleteFileAsync(string id)
         {
             if (ObjectId.TryParse(id, out var objectId))

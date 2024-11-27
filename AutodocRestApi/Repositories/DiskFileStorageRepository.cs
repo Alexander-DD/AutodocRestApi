@@ -15,7 +15,7 @@
             }
         }
 
-        /// <inheritdoc />
+
         public async Task<string> UploadFileAsync(IFormFile file)
         {
             var fileId = Guid.NewGuid().ToString(); // Генерируем уникальный ID файла
@@ -29,7 +29,7 @@
             return fileId; // Возвращаем уникальный ID файла
         }
 
-        /// <inheritdoc />
+
         public async Task<Stream?> DownloadFileAsync(string id)
         {
             var files = Directory.GetFiles(_storagePath, id + ".*");
@@ -49,7 +49,7 @@
             return memoryStream;
         }
 
-        /// <inheritdoc />
+
         public async Task DeleteFileAsync(string id)
         {
             var files = Directory.GetFiles(_storagePath, id + ".*");
