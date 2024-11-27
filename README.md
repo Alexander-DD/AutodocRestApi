@@ -41,13 +41,14 @@
    - **Контроллеры:** REST API контроллеры для задач и файлов.
 
 2. **База данных:**
-   - PostgreSQL с использованием ORM EF Core.
+   - MSSql или PostgreSQL с использованием ORM EF Core.
    - Таблицы:
      - `FileTasks`: хранит информацию о задачах.
      - `FileAttachments`: хранит метаинформацию о файлах, связанных с задачами.
 
 3. **Файловое хранилище:**
    - Локальное хранилище файлов с поддержкой загрузки, скачивания и удаления.
+   - База MongoDB
 
 ---
 
@@ -93,7 +94,8 @@
    Указывается в файле `appsettings.json`:
    ```json
    "ConnectionStrings": {
-     "PostgresConnection": "Host=localhost;Database=TaskDb;Username=postgres;Password=yourpassword"
+     "PostgresConnection": "Host=localhost;Database=YourDbName;Username=postgres;Password=yourpassword",
+     "MSSqlConnection": "Host=localhost;Database=YourDbName;Username=postgres;Password=yourpassword"
    }
 
 2. **Путь для хранения файлов:**
@@ -103,6 +105,14 @@
      "BasePath": "C:\\FileStorage"
    }
 
+3. **Настройки для MongoDB**
+   Указывается в файле `appsettings.json`:
+   ```json
+   "MongoSettings": {
+       "ConnectionString": "mongodb://localhost:<port>",
+       "DatabaseName": "YourDbName",
+       "GridFSBucketName": "FileAttachments"
+   }
 ---
 
 ## 7. Особенности
