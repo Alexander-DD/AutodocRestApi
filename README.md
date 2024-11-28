@@ -76,16 +76,30 @@
    - `DiskFileStorageRepository`: Реализация для локального хранилища.
    - `MongoFileStorageRepository`: Реализация для хранилища MongoDB.
 
-4. **`AppDbContext`:**
-   - Основной `DbContext`, управляющий таблицами `FileTasks` и `FileAttachments`.
+4. **`Контекст БД`:**
+   Контекст, управляющий таблицами `FileTasks` и `FileAttachments`.
+   - PostgresDbContext для работы с Postgres
+   - MSSqlDbContext для работы с MSSql
 
 ---
 
 ## 5. Работа с миграциями
 1. **Создание миграции:**
-   ```bash
-   dotnet ef migrations add MigrationName
-   dotnet ef database update
+для создания и обновления миграции, необходимо явно указывать контекст бд: MSSqlDbContext или PostgresDbContext:
+
+Для CLI:
+
+```bash
+   dotnet ef migrations add MigrationName --context MSSqlDbContext
+   dotnet ef database update --context MSSqlDbContext
+```
+
+Консоль диспетчера пакетов:
+
+```bash
+   Add-Migration InitialMSSqlMigration -Context MSSqlDbContext
+   Update-Database -Context MSSqlDbContext
+```
 
 ---
 
@@ -95,7 +109,7 @@
    ```json
    "ConnectionStrings": {
      "PostgresConnection": "Host=localhost;Database=YourDbName;Username=postgres;Password=yourpassword",
-     "MSSqlConnection": "Host=localhost;Database=YourDbName;Username=postgres;Password=yourpassword"
+     "MSSqlConnection": "Host=localhost;Database=YourDbName;Username=postgres;Password=yourpassword;TrustServerCertificate=True"
    }
 
 2. **Путь для хранения файлов:**
@@ -125,4 +139,4 @@
 ## 8. Swagger UI
 Swagger UI для тестирования API доступен по адресу:
    ```bash
-   http://localhost:<порт>/swagger
+   http://localhost:<порт>/swagger/index.html
