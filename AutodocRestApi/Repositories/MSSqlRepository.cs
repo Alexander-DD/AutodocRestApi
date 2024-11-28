@@ -1,14 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
+using TaskManagementAPI.Data;
+
 namespace TaskManagementAPI.Repositories
 {
     public class MSSqlRepository<T> : IDBRepository<T> where T : class
     {
-        private readonly DbContext _context;
+        private readonly MSSqlDbContext _context;
         private readonly DbSet<T> _dbSet;
 
-        public MSSqlRepository(DbContext context)
+        public MSSqlRepository(MSSqlDbContext context)
         {
             _context = context;
             _dbSet = _context.Set<T>();

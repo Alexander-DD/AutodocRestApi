@@ -10,10 +10,10 @@ namespace TaskManagementAPI.Repositories
     /// </summary>
     public class PostgresRepository<T> : IDBRepository<T> where T : class
     {
-        private readonly AppDbContext _context;
+        private readonly PostgresDbContext _context;
         private readonly DbSet<T> _dbSet;
 
-        public PostgresRepository(AppDbContext context)
+        public PostgresRepository(PostgresDbContext context)
         {
             _context = context;
             _dbSet = context.Set<T>();

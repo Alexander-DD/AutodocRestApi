@@ -10,8 +10,8 @@ using TaskManagementAPI.Data;
 
 namespace AutodocRestApi.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(PostgresDbContext))]
+    partial class PostgresDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -106,14 +106,14 @@ namespace AutodocRestApi.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2024, 11, 27, 2, 25, 9, 240, DateTimeKind.Utc).AddTicks(5279),
+                            Date = new DateTime(2024, 11, 28, 14, 1, 54, 826, DateTimeKind.Utc).AddTicks(3111),
                             IsCompleted = false,
                             Name = "Initial Task"
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2024, 11, 26, 2, 25, 9, 240, DateTimeKind.Utc).AddTicks(5281),
+                            Date = new DateTime(2024, 11, 27, 14, 1, 54, 826, DateTimeKind.Utc).AddTicks(3114),
                             IsCompleted = true,
                             Name = "Another Task"
                         });

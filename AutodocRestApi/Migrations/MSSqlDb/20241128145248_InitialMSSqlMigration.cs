@@ -1,15 +1,14 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace AutodocRestApi.Migrations
+namespace AutodocRestApi.Migrations.MSSqlDb
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialMSSqlMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,11 +17,11 @@ namespace AutodocRestApi.Migrations
                 name: "FileTasks",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    IsCompleted = table.Column<bool>(type: "boolean", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsCompleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,12 +32,12 @@ namespace AutodocRestApi.Migrations
                 name: "FileAttachments",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FileName = table.Column<string>(type: "text", nullable: false),
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FileSize = table.Column<long>(type: "bigint", nullable: false),
-                    FilePath = table.Column<string>(type: "text", nullable: false),
-                    FileTaskId = table.Column<int>(type: "integer", nullable: false)
+                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileTaskId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,8 +55,8 @@ namespace AutodocRestApi.Migrations
                 columns: new[] { "id", "Date", "IsCompleted", "Name" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 11, 27, 2, 25, 9, 240, DateTimeKind.Utc).AddTicks(5279), false, "Initial Task" },
-                    { 2, new DateTime(2024, 11, 26, 2, 25, 9, 240, DateTimeKind.Utc).AddTicks(5281), true, "Another Task" }
+                    { 1, new DateTime(2024, 11, 28, 14, 52, 47, 899, DateTimeKind.Utc).AddTicks(9162), false, "Initial Task" },
+                    { 2, new DateTime(2024, 11, 27, 14, 52, 47, 899, DateTimeKind.Utc).AddTicks(9164), true, "Another Task" }
                 });
 
             migrationBuilder.InsertData(

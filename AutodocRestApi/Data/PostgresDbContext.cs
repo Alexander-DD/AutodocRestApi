@@ -4,9 +4,9 @@ using TaskManagementAPI.Models;
 
 namespace TaskManagementAPI.Data
 {
-    public class AppDbContext : DbContext
+    public class PostgresDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        public PostgresDbContext(DbContextOptions<PostgresDbContext> options) : base(options)
         {
         }
 

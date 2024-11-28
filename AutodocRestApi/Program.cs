@@ -20,16 +20,16 @@ namespace AutodocRestApi
             builder.Services.AddSwaggerGen();
 
             // Настраиваем EF
-            var postgresConnection = builder.Configuration.GetConnectionString("PostgresConnection");
-            builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql(postgresConnection));
-            //var mssqlConnection = builder.Configuration.GetConnectionString("MSSqlConnection");
-            //builder.Services.AddDbContext<MSSqlDbContext>(options =>
-            //    options.UseSqlServer(mssqlConnection));
+            var mssqlConnection = builder.Configuration.GetConnectionString("MSSqlConnection");
+            builder.Services.AddDbContext<MSSqlDbContext>(options =>
+                options.UseSqlServer(mssqlConnection));
+            //var postgresConnection = builder.Configuration.GetConnectionString("PostgresConnection");
+            //builder.Services.AddDbContext<PostgresDbContext>(options =>
+            //    options.UseNpgsql(postgresConnection));
 
             // Настройка репозитория бд
-            builder.Services.AddScoped(typeof(IDBRepository<>), typeof(PostgresRepository<>));
-            //builder.Services.AddScoped(typeof(IDBRepository<>), typeof(MSSqlRepository<>));
+            builder.Services.AddScoped(typeof(IDBRepository<>), typeof(MSSqlRepository<>));
+            //builder.Services.AddScoped(typeof(IDBRepository<>), typeof(PostgresRepository<>));
 
             // Добавляем хранилище файлов
             builder.Services.AddScoped<IFileStorageRepository, DiskFileStorageRepository>();

@@ -2,18 +2,18 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TaskManagementAPI.Data;
 
 #nullable disable
 
-namespace AutodocRestApi.Migrations
+namespace AutodocRestApi.Migrations.MSSqlDb
 {
-    [DbContext(typeof(AppDbContext))]
-    [Migration("20241127022509_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(MSSqlDbContext))]
+    [Migration("20241128145248_InitialMSSqlMigration")]
+    partial class InitialMSSqlMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,32 +21,32 @@ namespace AutodocRestApi.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.11")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("TaskManagementAPI.Models.FileAttachment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("FileName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FilePath")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("FileSize")
                         .HasColumnType("bigint");
 
                     b.Property<int>("FileTaskId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -85,21 +85,21 @@ namespace AutodocRestApi.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsCompleted")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -109,14 +109,14 @@ namespace AutodocRestApi.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2024, 11, 27, 2, 25, 9, 240, DateTimeKind.Utc).AddTicks(5279),
+                            Date = new DateTime(2024, 11, 28, 14, 52, 47, 899, DateTimeKind.Utc).AddTicks(9162),
                             IsCompleted = false,
                             Name = "Initial Task"
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2024, 11, 26, 2, 25, 9, 240, DateTimeKind.Utc).AddTicks(5281),
+                            Date = new DateTime(2024, 11, 27, 14, 52, 47, 899, DateTimeKind.Utc).AddTicks(9164),
                             IsCompleted = true,
                             Name = "Another Task"
                         });
